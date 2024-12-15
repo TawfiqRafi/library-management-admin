@@ -1,0 +1,50 @@
+.products-section {
+
+    .products {
+        ul {
+            margin-top: 15px;
+
+            li {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+                font-weight:600;
+
+                i.bx {
+                    font-size: 20px;
+                }
+
+                span {
+                    margin-left: 15px;
+                }
+            }
+        }
+    }
+}
+
+.services-section {
+    &.about-page {
+        background-color: $color_light_gray_bg;
+    }
+    .service-thumbnail {
+        
+        img {
+            border-radius: 15px;
+        }
+    }
+
+    .service-content {
+
+        .services-list {
+            ul {
+                li {
+                    padding: 20px;
+
+                    h5 {
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

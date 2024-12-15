@@ -1,0 +1,40 @@
+table, .table {
+    width: 100%;
+    border: 1px solid $color_light_gray;
+
+    thead {
+        
+        tr {
+            th {
+                padding: 10px;
+                font-weight: 500;
+                font-size: 13px;
+                border-bottom: 1px solid $color_light_gray !important;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            cursor: pointer;
+
+            td {
+                padding: 8px 5px;
+                font-size: 13px;
+                border-bottom: 1px solid $color_light_gray;
+            }
+        }
+    }
+}
+.action-el {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .btn {
+        &.btn-sm {
+            font-size: 12px;
+            padding: 1px 5px;
+        }
+    }
+}

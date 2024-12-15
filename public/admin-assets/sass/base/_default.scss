@@ -1,0 +1,24 @@
+.dflex-end-center {
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.dflex-center-center  {
+    justify-content: center;
+    align-items: center;
+}
+
+.section-padding {
+    padding: 60px 0px;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.bg-gray {
+    background-color: #fafafa;
+}

@@ -1,0 +1,117 @@
+footer {
+    .footer-top {
+        background-color: $color_secondary;
+        padding: 30px 0px;
+
+        .social-links {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            grid-gap: 10px;
+            margin-top: 30px;
+    
+            li {
+                a {
+                    color: $color_white;
+                }
+
+                &:hover {
+                    a {
+                        color: $color_primary;
+                    }
+                }
+            }
+        }
+
+        .footer-item {
+            .footer-item-title {
+                margin-bottom: 30px;
+                h3 {
+                    color: $color_light_gray;
+                }
+            }
+
+            .footer-content {
+                color: $color_gray;
+
+                &.company-short-info {
+                    img {
+                        width: 70%;
+                        margin-bottom: 15px;
+                    }
+                }
+
+                .footer-nav {
+                    li {
+                        margin-bottom: 7px;
+                        a {
+                            color: $color_gray;
+                            display: block;
+
+                            &:hover {
+                                color: $color_white;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                }
+
+                .contact-info {
+                    li {
+                        color: $color_gray;
+                        margin-bottom: 10px;
+                        display: flex;
+                        grid-gap: 15px;
+                        align-items: center;
+
+                        .bx {
+                            font-size: 20px;
+                        }
+                        
+                        a {
+                            color: $color_gray;
+                            display: flex;
+                            grid-gap: 15px;
+                            align-items: center;
+
+                            &:hover {
+                                color: $color_white;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                }
+
+                .newsletter {
+                    margin-top:  30px;
+
+                    .form-group {
+                        .input-group {
+                            display: flex;
+                            background-color: $color_white;
+                            border-radius: 25px;
+
+                            .form-control {
+                                background: none;
+                                border: none;
+                            }
+
+                            .btn-primary {
+                                border-radius: 25px;
+                                padding: 0px 15px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .footer-copyright-section {
+        padding: 10px 0px;
+        background-color: $color_secondary;
+        .footer-copyright {
+            color: $color_gray;
+        }
+    }
+}

@@ -1,0 +1,18 @@
+.btn {
+    border: none;
+    font-family: $font_secondary;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.btn-primary {
+    background-color: $color_primary;
+    color: $color_white;
+}
+
+.btn-secondary {
+    background-color: $color_secondary;
+    color: $color_white;
+}

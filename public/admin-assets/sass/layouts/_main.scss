@@ -1,0 +1,173 @@
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    min-height: 100vh;
+    background-color: #f2f3f9;
+
+    .main-navigation {
+        border-right: 1px solid $color_light_gray;
+        background: $color_secondary;
+        width: $nav_size;
+        transition: 200ms;
+
+        .navigation {
+            list-style: none;
+
+            li {
+                position: relative;
+                z-index: 1;
+                
+                a {
+                    position: relative;
+                    display: block;
+                    z-index: 1;
+                    width: 100%;
+                    color: $color_gray;
+                    font-size: 15px;
+                    font-weight: 400;
+                    text-transform: capitalize;
+                    text-decoration: none;
+                    padding: 10px 10px;
+
+                    &:hover {
+                        color: $color_white;
+                    }
+                }
+                
+
+                &.treeview {
+                    border-bottom: 1px solid #00000035;
+
+                    &:last-child {
+                        border-bottom: 0px solid $color_light_gray;
+                    }
+                    
+                    &::after {
+                        position: absolute;
+                        content: '\f078';
+                        right: 10px;
+                        font-family: "Font Awesome 5 Free";
+                        font-weight: 600;
+                        top: 10px;
+                        transition: 250ms;
+                        font-size: 12px;
+                        color: $color_gray;
+                    }
+
+                    .treeview-menu {
+                        display: none;
+                        background-color: #00000035;
+                        padding-left: 20px;
+                        
+                        .treeview-menu {
+                            padding-left: 30px;
+                        }
+
+                        li {
+
+                            a {
+                                font-size: 14px;
+                                color: $color_gray;
+                                margin-left: 0;
+                                margin-right: 0;
+                                position: relative;
+                                z-index: 1;
+                                background: none;
+                                border: none;
+                                padding: 5px 0px;
+
+                                &:hover {
+                                    color: $color_white;
+                                }
+                            }
+
+                            &.active {
+                                a {
+                                    color: $color_primary;
+                                }
+                            }
+                        }
+                    }
+
+                    &.nav-open {
+                        a {
+                            color: $color_primary;
+                        }
+
+                        &::after {
+                            transform: rotate(180deg);
+                            transition: 200ms;
+                            color: $color_primary;
+                        }
+                    }
+                }
+
+                &.active {
+                    a {
+                        color: $color_primary;
+                    }
+                }
+                
+            }
+        }
+    }
+    
+    .main-content {
+        transition: 200ms;
+        width: $content_size;
+
+        .content {
+            padding: 15px;
+        }
+    }
+
+    &.mini-nav {
+        .main-navigation{
+            width: 40px;
+
+            ul {
+                li {
+                    a {
+                        span {
+                            display: none;
+                        }
+                    }
+
+                    .treeview-menu {
+                        display: none !important;
+                    }
+                    &::after {
+                        display: none;
+                    }
+                }
+            }
+        }
+    
+        .main-content {
+            width: calc(100% - 40px);
+        }
+    }
+}
+
+.package-input {
+    border-bottom: 1px solid $color_gray;
+
+    label {
+        font-weight: 500;
+        cursor: pointer;
+        color: $color_secondary;
+    }
+}
+
+.package-categories {
+    margin-top: 10px;
+
+    .package-category-input {
+        margin-bottom: 5px;   
+        label {
+            cursor: pointer;
+        }
+    }
+}

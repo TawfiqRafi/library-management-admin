@@ -1,0 +1,42 @@
+.work-process {
+
+    .work-process-item {
+        margin-bottom: 30px;
+        position: relative;
+        border-radius: 30px;
+        overflow: hidden;
+        border: 1px solid $color_light_gray;
+        height: 270px;
+
+        .work-process-item-content {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: $color_light_gray_bg;
+            width: 50%;
+            height: 100%;
+            padding: 10px;
+            text-align: right;
+            padding: 30px;
+            border-radius: 30px;
+
+            span {
+                color: $color_gray;
+                font-weight: 900;
+                font-size: 30px;
+                display: block;
+            }
+
+            &.left  { 
+                right: auto;
+                left: 0;
+                text-align: left;
+            }
+
+            h2 {
+                margin: 15px 0px;
+                font-size: 24px;
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+@mixin dflex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+@mixin dflex-center {
+    justify-content: center;
+    align-items: center;
+} 
