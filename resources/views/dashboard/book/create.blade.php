@@ -37,19 +37,11 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="" class="col-md-3 col-form-label">Short Description</label>
+                <label for="" class="col-md-3 col-form-label">Author</label>
                 <div class="col-md-9">
-                    <textarea type="text" name="short_description" id="" placeholder="Enter short description"
+                    <textarea type="text" name="author" id="" placeholder="Enter author name"
                         class="form-control"></textarea>
-                    <span class="text-danger">{{ $errors->first('short_description') }}</span>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="" class="col-md-3 col-form-label">Description</label>
-                <div class="col-md-9">
-                    <textarea type="text" name="description" id="" placeholder="Enter description"
-                        class="form-control ckeditor"></textarea>
-                    <span class="text-danger">{{ $errors->first('description') }}</span>
+                    <span class="text-danger">{{ $errors->first('author') }}</span>
                 </div>
             </div>
             <div class="form-group my-10 text-right">
@@ -63,12 +55,6 @@
     </div>
 @endsection
 @push('footer-scripts')
-    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.ckeditor').ckeditor();
-        });
-    </script>
     <script>
         function readURL(input) {
             if (input.files && input.files[0]) {

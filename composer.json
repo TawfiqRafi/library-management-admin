@@ -12,7 +12,8 @@
         "laravel/passport": "^10.4",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
-        "laravelcollective/html": "^6.2"
+        "laravelcollective/html": "^6.2",
+        "picqer/php-barcode-generator": "^3.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

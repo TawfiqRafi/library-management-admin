@@ -13,7 +13,8 @@
                     <th>#</th>
                     <th>Title</th>
                     <th>Image</th>
-                    <th>Short Description</th>
+                    <th>Author</th>
+                    <th>Barcode</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -28,7 +29,14 @@
                                 <img src="{{ asset($book->image) }}" alt="" width="40px">
                                 @endif
                             </td>
-                            <td>{{ $book->short_description }}</td>
+                            <td>{{ $book->author }}</td>
+                            <td>
+                                @php
+                                    $generator = new Picqer\Barcode\BarcodeGeneratorPNG();
+                                @endphp
+                                <img src="data:image/png;base64,{{ base64_encode($generator->getBarcode($book->barcode, $generator::TYPE_CODE_128)) }}" alt="Barcode">
+                                <br>{{ $book->barcode }}
+                            </td>
                             <td>
                                 <div class="action-el">
                                     <a href="{{ route('book.edit', $book->slug) }}" class="btn btn-warning">

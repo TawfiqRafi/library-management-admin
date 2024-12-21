@@ -32,17 +32,18 @@ class BookController extends Controller
     {
         $rules = [
             'title' => 'required',
-            'short_description' => 'required',
-            'description' => 'required',
+            'author' => 'required',
             'image' => 'required',
         ];
         //validation
         $this->validate($request, $rules);
 
+        $barcodeValue = 'BOOK-' . time();
+
         $book = new Book();
         $book->title = $request->get('title');
-        $book->short_description = $request->get('short_description');
-        $book->description = $request->get('description');
+        $book->author = $request->get('author');
+        $book->barcode = $barcodeValue;
         if ($request->has('image')) {
             $path = Helpers::file_upload($request,'image','book');
         }
@@ -79,16 +80,14 @@ class BookController extends Controller
     {
         $rules = [
             'title' => 'required',
-            'short_description' => 'required',
-            'description' => 'required',
+            'author' => 'required',
         ];
         //validation
         $this->validate($request, $rules);
 
         $book = Book::where('slug',$slug)->first();
         $book->title = $request->get('title');
-        $book->short_description = $request->get('short_description');
-        $book->description = $request->get('description');
+        $book->author = $request->get('author');
         if ($request->has('image')) {
             if (isset($book) && $book->image) {
                 unlink($book->image);
