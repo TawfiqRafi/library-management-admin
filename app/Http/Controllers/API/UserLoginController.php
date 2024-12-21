@@ -1,8 +1,11 @@
 <?php
 namespace App\Http\Controllers\API;
 
+use App\Helpers\Helpers;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,11 +19,9 @@ class UserLoginController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $validator->errors(),
-            ], 422);
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
         }
+
 
         $credentials = $request->only('email', 'password');
 
@@ -45,5 +46,33 @@ class UserLoginController extends Controller
             'message' => 'Invalid email or password',
         ], 401);
     }
+
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'is_admin' => 0,
+        ]);
+
+        $token = $user->createToken('UserToken')->accessToken;
+
+        return response()->json([
+            'message' => 'Registration successful',
+            'access_token' => $token,
+        ], 201);
+    }
+
 }
 
