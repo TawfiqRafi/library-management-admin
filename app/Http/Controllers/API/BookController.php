@@ -9,15 +9,34 @@ use Illuminate\Support\Facades\Validator;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::all();
+        $validator = Validator::make($request->all(), [
+            'limit' => 'required',
+            'offset' => 'required',
+        ]);
 
-        return response()->json([
-            'success' => true,
-            'data' => $books,
-            'message' => 'Book list retrieved successfully.',
-        ], 200);
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+        $key = explode(' ', $request['title'] ?? '');
+        $query = Book::query();
+        if (!empty($key)) {
+            $query->where(function ($q) use ($key) {
+                foreach ($key as $k) {
+                    $q->orWhere('title', 'like', '%' . $k . '%');
+                }
+            });
+        }
+        $paginator = $query->paginate($request['limit'], ['*'], 'page', $request['offset']);
+        $data=[
+            'total_size' => $paginator->total(),
+            'limit' => $request['limit'],
+            'offset' => $request['offset'],
+            'books' => $paginator->items()
+        ];
+
+        return response()->json($data, 200);
     }
 
     public function store(Request $request)
@@ -49,7 +68,7 @@ class BookController extends Controller
                 'success' => true,
                 'data' => $book,
                 'message' => 'Book saved successfully.',
-            ], 201);
+            ], 200);
         }
 
         return response()->json([
@@ -98,7 +117,7 @@ class BookController extends Controller
 
         if ($request->hasFile('image')) {
             if ($book->image && file_exists($book->image)) {
-                unlink($book->image); // Remove old image
+                unlink($book->image);
             }
             $path = Helpers::file_upload($request, 'image', 'book');
             $book->image = $path;
@@ -130,7 +149,7 @@ class BookController extends Controller
         }
 
         if ($book->image && file_exists($book->image)) {
-            unlink($book->image); // Remove associated image
+            unlink($book->image);
         }
 
         if ($book->delete()) {

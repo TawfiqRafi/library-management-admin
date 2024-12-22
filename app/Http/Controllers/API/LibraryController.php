@@ -116,38 +116,97 @@ class LibraryController extends Controller
     }
 
     // Available Books
-    public function availableBooks()
+    public function availableBooks(Request $request)
     {
-        $books = Book::whereDoesntHave('borrowings', function ($query) {
-            $query->whereNull('returned_at');
-        })->get();
+        $validator = Validator::make($request->all(), [
+            'limit' => 'required',
+            'offset' => 'required',
+        ]);
 
-        return response()->json(['available_books' => $books], 200);
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+        $key = explode(' ', $request['title'] ?? '');
+
+        $query = Book::whereDoesntHave('borrowings', function ($query) {
+            $query->whereNull('returned_at');
+        });
+        if (!empty($key)) {
+            $query->where(function ($q) use ($key) {
+                foreach ($key as $k) {
+                    $q->orWhere('title', 'like', '%' . $k . '%');
+                }
+            });
+        }
+        $paginator = $query->paginate($request['limit'], ['*'], 'page', $request['offset']);
+
+        $data=[
+            'total_size' => $paginator->total(),
+            'limit' => $request['limit'],
+            'offset' => $request['offset'],
+            'books' => $paginator->items()
+        ];
+
+        return response()->json($data, 200);
     }
 
     // Current Borrowed Books
-    public function currentBorrowedBooks()
+    public function currentBorrowedBooks(Request $request)
     {
         $user = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'limit' => 'required',
+            'offset' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
 
         $currentBorrowedBooks = Borrowing::with('book')
             ->where('user_id', $user->id)
-            ->whereNull('returned_at')
-            ->get();
+            ->whereNull('returned_at');
 
-        return response()->json(['current_borrowed_books' => $currentBorrowedBooks], 200);
+        $paginator = $currentBorrowedBooks->paginate($request['limit'], ['*'], 'page', $request['offset']);
+
+        $data=[
+            'total_size' => $paginator->total(),
+            'limit' => $request['limit'],
+            'offset' => $request['offset'],
+            'books' => $paginator->items()
+        ];
+
+        return response()->json($data, 200);
     }
 
     // Borrowing History
-    public function borrowingHistory()
+    public function borrowingHistory(Request $request)
     {
         $user = auth()->user();
 
+        $validator = Validator::make($request->all(), [
+            'limit' => 'required',
+            'offset' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
         $history = Borrowing::with('book')
             ->where('user_id', $user->id)
-            ->orderBy('borrowed_at', 'desc')
-            ->get();
+            ->orderBy('borrowed_at', 'desc');
 
-        return response()->json(['history' => $history], 200);
+        $paginator = $history->paginate($request['limit'], ['*'], 'page', $request['offset']);
+
+        $data=[
+            'total_size' => $paginator->total(),
+            'limit' => $request['limit'],
+            'offset' => $request['offset'],
+            'books' => $paginator->items()
+        ];
+
+        return response()->json($data, 200);
     }
 }

@@ -3,7 +3,6 @@
 use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\LibraryController;
 use App\Http\Controllers\API\UserLoginController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +20,8 @@ Route::group(['namespace' => 'api'], function () {
     Route::post('/user/register', [UserLoginController::class, 'register']);
 
     Route::middleware(['auth:api'])->group(function () {
+        Route::post('/user/update', [UserLoginController::class, 'updateProfile']);
+
         Route::prefix('books')->group(function () {
             Route::get('/', [BookController::class, 'index']);
             Route::post('store', [BookController::class, 'store']);

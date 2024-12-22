@@ -74,5 +74,37 @@ class UserLoginController extends Controller
         ], 201);
     }
 
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+        }
+
+        if ($request->has('name')) {
+            $user->name = $request->name;
+        }
+        if ($request->has('email')) {
+            $user->email = $request->email;
+        }
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+        ], 200);
+    }
+
 }
 
