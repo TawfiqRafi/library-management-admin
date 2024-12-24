@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -47,10 +49,23 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function ($router) {
 
     $router->group(['prefix' => 'book', 'as' => 'book.'], function ($router) {
         $router->get('/', [BookController::class, 'index'])->name('list');
+        $router->get('available', [BookController::class, 'available'])->name('available');
         $router->get('/create', [BookController::class, 'create'])->name('create');
         $router->post('/create', [BookController::class, 'store'])->name('store');
         $router->get('/edit/{slug}', [BookController::class, 'edit'])->name('edit');
         $router->put('/edit/{slug}', [BookController::class, 'update'])->name('update');
         $router->delete('/destroy/{slug}', [BookController::class, 'destroy'])->name('destroy');
     });
+
+    $router->group(['prefix' => 'users', 'as' => 'users.'], function ($router) {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('{id}', [UserController::class, 'show'])->name('show');
+    });
+
+    $router->group(['prefix' => 'report', 'as' => 'report.'], function ($router) {
+        Route::get('current', [ReportController::class, 'currentBorrowedBooks'])->name('current');
+        Route::get('history', [ReportController::class, 'borrowHistory'])->name('history');
+        Route::post('{id}/return', [ReportController::class, 'markAsReturned'])->name('return');
+    });
+
 });

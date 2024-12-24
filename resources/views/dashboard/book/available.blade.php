@@ -4,7 +4,7 @@
     <div class="mt-4">
         <div class="card shadow">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="mb-0">All Book List</h3>
+                <h3 class="mb-0">Available Book List</h3>
                 <a href="{{ route('book.create') }}" class="btn btn-sm btn-secondary">Create new</a>
             </div>
             <div class="card-body">

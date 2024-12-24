@@ -9,14 +9,49 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $key = explode(' ', $request['search'] ?? '');
+        $query = Book::query();
+        if (!empty($key)) {
+            $query->where(function ($q) use ($key) {
+                foreach ($key as $k) {
+                    $q->orWhere('title', 'like', '%' . $k . '%')
+                        ->orWhere('author', 'like', '%' . $k . '%');
+                }
+            });
+        }
+        $paginator = $query->paginate(25);
         $data = [
             'page_title' => 'book List',
-            'books' => Book::all()
+            'books' => $paginator,
         ];
 
         return view('dashboard.book.index')->with(array_merge($this->data, $data));
+    }
+    public function available(Request $request)
+    {
+        $key = explode(' ', $request['search'] ?? '');
+        $query = Book::query();
+        $query->whereDoesntHave('borrowings', function ($q) {
+            $q->whereNull('returned_at');
+        });
+
+        if (!empty($key)) {
+            $query->where(function ($q) use ($key) {
+                foreach ($key as $k) {
+                    $q->orWhere('title', 'like', '%' . $k . '%')
+                        ->orWhere('author', 'like', '%' . $k . '%');
+                }
+            });
+        }
+        $paginator = $query->paginate(25);
+        $data = [
+            'page_title' => 'Available book List',
+            'books' => $paginator,
+        ];
+
+        return view('dashboard.book.available')->with(array_merge($this->data, $data));
     }
 
     public function create()

@@ -1047,3 +1047,23 @@ main .main-navigation .navigation li.treeview.nav-open a {
 main .main-navigation .navigation li.treeview .treeview-menu li.active a {
     color: #31a97f;
 }
+
+/* Hover effect for the card */
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px); /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+/* Optional: Smooth transition for card elements */
+.card-header, .card-body {
+    transition: background-color 0.3s ease;
+}
+
+.hover-card:hover .card-header, .hover-card:hover .card-body {
+    background-color: #f8f9fa; /* Slight background color change on hover */
+}
+
