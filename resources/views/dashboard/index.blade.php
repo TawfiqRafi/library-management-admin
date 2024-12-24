@@ -116,6 +116,11 @@
                             </tbody>
                         </table>
                     </div>
+                    @if ($assignedBookHistory->isEmpty())
+                        <div class="alert alert-warning text-center mt-3">
+                            No borrow history found.
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
