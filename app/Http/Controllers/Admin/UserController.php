@@ -15,10 +15,10 @@ class UserController extends Controller
     {
         $search = $request->input('search');
 
-        $users = User::where('is_admin',0)->when($search, function ($query, $search) {
+        $users = User::when($search, function ($query, $search) {
             $query->where('name', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%");
-        })->paginate(25);
+        })->where('is_admin',0)->paginate(25);
 
         $data = [
             'page_title' => 'Users List',
